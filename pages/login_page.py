@@ -21,6 +21,12 @@ class LoginPage(BaseObject):
         super().__init__(driver)
         self.assertion = Assertions
 
+    def auth_flow(self, is_email_flow=True):
+        if is_email_flow:
+            ...
+        else:
+            ...
+
     def enter_email(self, user_name=Secrets.USER_NAME_CLIENT):
         self.send_keys(self.USER_NAME_FIELD, user_name)
 
@@ -44,6 +50,9 @@ class LoginPage(BaseObject):
             self.click(self.CONTINUE_BUTTON)
         else:
             raise ValueError("Invalid button type provided.")
+
+    def sign_in_email_flow(self):
+        ...
 
     def is_error_message_correct(self, message):
         self.assertion.assert_equal(
