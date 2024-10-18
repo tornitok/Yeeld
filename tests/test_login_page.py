@@ -3,15 +3,8 @@ from time import sleep
 import pytest
 
 def test_success_log_in_with_email(login_page):
-    login_page.click_button('sign_in')
-    login_page.click_button('email')
-    login_page.enter_email()
-    login_page.enter_password()
-    login_page.click_button('sign_in')
-    login_page.enter_verification_code()
-    login_page.click_button('continue')
+    login_page.auth_flow()
     login_page.is_url_valid()
-
 
 def test_success_log_in_with_phone(login_page):
     login_page.click_button('sign_in')
