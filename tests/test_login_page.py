@@ -2,20 +2,13 @@ from time import sleep
 
 import pytest
 
-def test_success_log_in_with_email(login_page):
-    login_page.auth_flow()
-    login_page.is_url_valid()
-
-def test_success_log_in_with_phone(login_page):
-    login_page.click_button('sign_in')
-    sleep(5)
-    login_page.click_button('phone')
-    login_page.enter_phone()
-    sleep(5)
-    login_page.enter_password()
-    login_page.click_button('sign_in')
-    login_page.enter_verification_code()
-    login_page.click_button('continue')
+@pytest.mark.parametrize("login_flow", ["email", "phone"])
+def test_success_log_in(login_page, login_flow):
+    if login_flow == "email":
+        login_page.auth_flow(is_email_flow=True)
+    else:
+        login_page.auth_flow(is_email_flow=False)
+    sleep(3)
     login_page.is_url_valid()
 
 

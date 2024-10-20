@@ -1,10 +1,10 @@
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.select import Select
 import urllib.parse
+
 
 class BaseObject:
     def __init__(self, driver: WebDriver):
@@ -16,10 +16,6 @@ class BaseObject:
 
     def _is_clickable(self, locator: tuple[str, str]) -> WebElement:
         return self.wait.until(ec.element_to_be_clickable(locator))
-
-    def _is_selectable(self, locator: tuple[str, str]):
-        element = self.driver.find_element(*locator)
-        return Select(element)
 
     def _is_present(self, locator: tuple[str, str]) -> WebElement:
         return self.wait.until(ec.presence_of_element_located(locator))
@@ -37,7 +33,9 @@ class BaseObject:
             self._is_present(locator).send_keys(value)
 
     def select_element(self, locator: tuple[str, str], value: str) -> None:
-        return self._is_selectable(locator).select_by_visible_text(value)
+        element = self._is_visible(locator)
+        select = Select(element)
+        select.select_by_visible_text(value)
 
     def get_current_url(self) -> str:
         return urllib.parse.unquote(self.driver.current_url)
