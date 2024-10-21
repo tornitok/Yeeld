@@ -1,7 +1,13 @@
 import random
 import string
+import os
+import json
+
 
 class DataGenerator:
+    ROOT_PATH = os.path.dirname(os.path.realpath(__file__))
+    file_path = os.path.join(ROOT_PATH, "country_codes.json")
+
     @staticmethod
     def generate_string(length: int) -> str:
         """
@@ -23,5 +29,21 @@ class DataGenerator:
         """
         return random.randint(min_value, max_value)
 
+    @staticmethod
+    def get_random_country(file_path=file_path) -> str:
+        """
+        Get a random country from a JSON file containing country names.
+
+        :param file_path: Path to the JSON file with country data.
+        :return: Random country name.
+        """
+        with open(file_path, 'r') as file:
+            country_data = json.load(file)
+        country_names = [country['name'] for country in country_data]
+        return random.choice(country_names)
+
+
+
 generator = DataGenerator()
 generate_email = generator.generate_string(10)
+generate_country = generator.get_random_country()

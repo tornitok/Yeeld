@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from base.base_object import BaseObject
 from support.assertions import Assertions
 from config import Secrets, URL
-from support.data_generator import generate_email
+from support.data_generator import generate_email, generate_country
 
 
 class LoginPage(BaseObject):
@@ -43,6 +43,7 @@ class LoginPage(BaseObject):
     def sign_up_flow(self):
         self.click_sign_up_button()
         self.register_email()
+        self.register_phone()
 
     def sign_in_email_flow(self):
         self.click_sign_in_button()
@@ -72,8 +73,12 @@ class LoginPage(BaseObject):
 
     def register_email(self):
         self.enter_email(is_sign_up=True)
-        sleep(5)
         self.click_continue()
+        self.enter_verification_code()
+
+    def register_phone(self):
+        self.choose_country_code(generate_country)
+        self.enter_phone('0000008100')
         self.enter_verification_code()
 
     def enter_email(self, user_name=Secrets.USER_NAME_CLIENT, is_sign_up=False):
