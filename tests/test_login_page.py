@@ -11,7 +11,8 @@ def test_success_log_in(login_page, login_flow):
     sleep(3)
     login_page.is_url_valid()
 
-
+def test_sign_up(login_page):
+    login_page.sign_up_flow()
 
 # @pytest.mark.parametrize(
 #     'user_name, password, error_message',

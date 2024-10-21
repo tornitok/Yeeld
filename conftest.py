@@ -4,7 +4,6 @@ from selenium.webdriver.chrome.service import Service
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from pages.login_page import LoginPage
-from pages.chat_page import ChatPage
 from config import URL
 
 

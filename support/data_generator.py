@@ -24,6 +24,4 @@ class DataGenerator:
         return random.randint(min_value, max_value)
 
 generator = DataGenerator()
-random_string = generator.generate_string(10)
-
-print(f"Random String: {random_string}")
+generate_email = generator.generate_string(10)
