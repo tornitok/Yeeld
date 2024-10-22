@@ -10,6 +10,7 @@ class Secrets:
     PASSWORD_CLIENT: Final[str] = os.getenv('PASSWORD')
     VERIFICATION_CODE: Final[str] = os.getenv('VERIFICATION_CODE')
     PHONE_NUMBER: Final[str] = os.getenv('PHONE_NUMBER')
+    GENERIC_PHONE_NUMBER: Final[str] = os.getenv('GENERIC_PHONE')
 
 class URL:
     BASE_URL = 'https://amzonite:SFDKgnbd@@!13123@amzonite-dev.ibisweb3.dev'

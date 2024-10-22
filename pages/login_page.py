@@ -1,10 +1,8 @@
-from time import sleep
-
 from selenium.webdriver.common.by import By
 from base.base_object import BaseObject
 from support.assertions import Assertions
 from config import Secrets, URL
-from support.data_generator import generate_email, generate_country
+from support.data_generator import generate_email, generate_country, generate_password
 
 
 class LoginPage(BaseObject):
@@ -41,17 +39,21 @@ class LoginPage(BaseObject):
             self.sign_in_phone_flow()
 
     def sign_up_flow(self):
+        """Sign up flow with generation of email and password"""
         self.click_sign_up_button()
         self.register_email()
         self.register_phone()
+        self.create_new_password()
 
     def sign_in_email_flow(self):
+        """Sign in flow with email"""
         self.click_sign_in_button()
         self.click_sign_in_with_email()
         self.enter_credentials_email()
         self.complete_login()
 
     def sign_in_phone_flow(self):
+        """Sign in flow with phone"""
         self.click_sign_in_button()
         self.click_sign_in_with_phone()
         self.choose_country_code()
@@ -78,8 +80,12 @@ class LoginPage(BaseObject):
 
     def register_phone(self):
         self.choose_country_code(generate_country)
-        self.enter_phone('0000008100')
+        self.enter_phone(is_sign_up=True)
+        self.click_continue()
         self.enter_verification_code()
+
+    def create_new_password(self):
+        self.enter_password(is_sign_up=True)
 
     def enter_email(self, user_name=Secrets.USER_NAME_CLIENT, is_sign_up=False):
         if is_sign_up:
@@ -87,11 +93,17 @@ class LoginPage(BaseObject):
         else:
             self.send_keys(self.USER_NAME_FIELD, user_name)
 
-    def enter_phone(self, phone_number=Secrets.PHONE_NUMBER):
-        self.send_keys(self.USER_PHONE_FIELD, phone_number)
+    def enter_phone(self, phone_number=Secrets.PHONE_NUMBER, is_sign_up=False):
+        if is_sign_up:
+            self.send_keys(self.USER_PHONE_FIELD, Secrets.GENERIC_PHONE_NUMBER)
+        else:
+            self.send_keys(self.USER_PHONE_FIELD, phone_number)
 
-    def enter_password(self, password=Secrets.PASSWORD_CLIENT):
-        self.send_keys(self.PASSWORD_FIELD, password)
+    def enter_password(self, password=Secrets.PASSWORD_CLIENT, is_sign_up=False):
+        if is_sign_up:
+            self.send_keys(self.PASSWORD_FIELD, generate_password)
+        else:
+            self.send_keys(self.PASSWORD_FIELD, password)
 
     def enter_verification_code(self, code=Secrets.VERIFICATION_CODE):
         self.send_keys(self.SECURITY_VERIFICATION_INPUT, code)

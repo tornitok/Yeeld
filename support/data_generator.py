@@ -30,6 +30,12 @@ class DataGenerator:
         return random.randint(min_value, max_value)
 
     @staticmethod
+    def generate_password(length=6):
+        characters = string.ascii_letters + string.digits + string.punctuation
+        password = "".join(characters[random.randint(0, len(characters) - 1)] for _ in range(length))
+        return password
+
+    @staticmethod
     def get_random_country(file_path=file_path) -> str:
         """
         Get a random country from a JSON file containing country names.
@@ -47,3 +53,4 @@ class DataGenerator:
 generator = DataGenerator()
 generate_email = generator.generate_string(10)
 generate_country = generator.get_random_country()
+generate_password = generator.generate_password()
